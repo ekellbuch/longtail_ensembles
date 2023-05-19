@@ -1,0 +1,86 @@
+Comment: >
+  Run:
+  python scripts/run.py --config-name="run_cpu_cifar10" trainer_cfg.accelerator="cpu"
+  TODO: 
+  python scripts/run.py --config-name="run_cpu_cifar10" trainer_cfg.accelerator="ddp_cpu" trainer_cfg.logger="tensorboard" +trainer_cfg.num_processes=4
+
+project_name: longtail_cpu_cifar10
+
+# Program arguments:
+data_cfg:
+  test_set: "CIFAR10"
+  data_dir: ${oc.env:HOME}/pytorch_datasets
+  ood_dataset: cifar10_1
+  corruption: null  # -c corruption_type
+  level: null  # -c corruption_level
+  version: v4  # cifar10_1 version v4 or v6
+  num_classes: 10
+  samples_per_class: null
+  batch_size: 256
+  num_workers: 32
+  seed: 0  # usually 0
+  valid_size: 0.1  # assign val_set 0.1*train_set size
+
+trainer_cfg:
+  fast_dev_run: 1
+  logger: "tensorboard"
+  deterministic: false
+  log_every_n_steps: 50
+  max_epochs: 1
+  precision: 32
+  devices: auto
+  accelerator: auto
+  val_check_interval: 1.0
+  plugins: null
+
+# training flags
+fit_cfg:
+  ckpt_path: null
+
+eval_cfg:
+  test_phase: 0
+  softmax: 0
+  store_split: 0
+  random_eval: 1  # random eval do not store logits.
+  store_train: 0
+  return_model: 0
+
+seed: null
+
+module_cfg:
+  module: base
+  classifier: resnet32_cfa
+  pretrained: 0
+  pretrained-path: null
+  learning_rate: 1e-2
+  weight_decay: 1e-2
+  lamb: 0.5
+  scheduler: cosine
+  nb_models: 4
+  gamma: 1
+  temperature_scaling: 0
+  checkpoint: null
+  samples_per_class: null
+
+callbacks:
+  gradnorm: 0
+  checkpoint_callback: 1
+  early_stopping: 0
+  lr_monitor: 1
+
+early_stop_cfg:
+  monitor: acc/val
+  mode: max
+  patience: 3  # related to val_check_interval
+  min_delta: 0.00
+
+# Temperature scaling parameters
+ts_cfg:
+  use_train_loss: false  # if False, uses cross entropy loss
+  max_epochs: 1
+  init_temp: 1.5  # init temperature
+  ts_module: "ts_base" # ts and ts_vector
+
+hydra:
+  run:
+    dir: ./outputs/${now:%y-%m-%d}/${now:%H-%M-%S}

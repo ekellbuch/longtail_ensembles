@@ -1,0 +1,97 @@
+Comment: >
+  Eval performance of checkpoint from:
+  https://github.com/jiawei-ren/BalancedMetaSoftmax-Classification/tree/main
+  python scripts/run.py --config-name="eval_cifar100_fromrepo"
+
+  Checkpoints cifar100:
+  balanced-softmax(end-to-end): val=0.467 vs repo: train=80.0, val=0.467
+  data/final_model_checkpoint_balanced_e2e_cifar100.pt
+
+  [x] Step 1: check performance of checkpoint from repo
+  [x] Step 2: check performance of training model with same loss
+  [x] Step 3: check performance of training larger model with same loss
+
+project_name: eval_longtail_cifar100_from_repo
+
+# data arguments
+data_cfg:
+  test_set: "IMBALANCECIFAR100"
+  data_dir: ${oc.env:HOME}/pytorch_datasets
+  ood_dataset: cifar10_1
+  corruption: null    # params for corrypted dataset
+  version: v4
+  num_classes: 100
+  samples_per_class: null
+  batch_size: 256
+  num_workers: 32  # split data
+  seed: 0
+  level: null    # params for corrypted dataset
+  imb_type: exp   # params for imbalanced cifar10/0
+  imb_factor: 0.005  # params for imbalanced cifar10/0
+  valid_size: 0.1
+
+# trainer pl arguments
+trainer_cfg:
+  fast_dev_run: 0
+  logger: "wandb"
+  deterministic: false
+  log_every_n_steps: 50
+  max_epochs: 50
+  precision: 32
+  devices: auto
+  accelerator: auto
+  plugins: null
+  gradient_clip_val: 0
+
+callbacks:
+  gradnorm: 0
+  checkpoint_callback: 1
+  early_stopping: 0
+
+fit_cfg:
+  ckpt_path: null
+
+eval_cfg:
+  test_phase: 1
+  softmax: 0
+  store_split: 0
+  random_eval: 1  # random eval: do not store logits.
+  store_train: 0
+  return_model: 0
+
+seed: null
+
+# module arguments
+module_cfg:
+  module: base_bloss
+  classifier: resnet32_cfa
+  pretrained: 0
+  pretrained-path: null
+  learning_rate: 1e-2
+  weight_decay: 1e-2
+  lamb: 0.5
+  scheduler: cosine
+  nb_models: 4
+  gamma: 1
+  temperature_scaling: 0
+  checkpoint:  "/data/Projects/linear_ensembles/longtail_ensembles/data/final_model_checkpoint_balanced_e2e_cifar100.pth"
+  samples_per_class: null #bloss module parameter
+  warmup_epochs: null  #only if scheduler is cosine_fwarmup
+
+# early stopping cfg
+early_stop_cfg:
+  monitor: loss/val
+  mode: min
+  verbose: true
+  min_delta: 0.0001
+  patience: 10  # related to val_check_interval
+
+# Temperature scaling parameters
+ts_cfg:
+  use_train_loss: false  # if False, uses cross entropy loss
+  max_epochs: 1
+  init_temp: 1.5  # init temperature
+
+hydra:
+  run:
+    dir: ./outputs/${now:%y-%m-%d}/${now:%H-%M-%S}

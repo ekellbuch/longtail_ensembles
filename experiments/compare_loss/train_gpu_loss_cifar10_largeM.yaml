@@ -1,0 +1,43 @@
+Comment: >
+  Run
+  wandb sweep experiments/compare_loss/train_gpu_loss_cifar10_largeM.yaml
+
+  Experiments:
+  # set data_cfg.seed = 0 so batch loader is seeded
+  https://wandb.ai/ekellbuch/uncategorized/sweeps/0itowy8a
+
+name: train_gpu_loss_M
+program: scripts/run.py
+method: grid
+
+metric:
+  name: loss/val
+  goal: minimize
+parameters:
+  project_name:
+    value: longtail_gpu_cifar10lt
+  seed:
+    values: [10, 11, 12, 13, 14]
+  module_cfg.temperature_scaling:
+    value: 0
+  module_cfg.module:
+    values: [base, base_bloss]
+  data_cfg.test_set:
+    value: "IMBALANCECIFAR10"
+  module_cfg.classifier:
+    values: ["resnet32_cfa"]
+  trainer_cfg.max_epochs:
+    value: 150
+  trainer_cfg.logger:
+    value: "wandb"
+  data_cfg.num_workers:
+    value: 32
+
+
+command:
+  - ${env}
+  - python
+  - ${program}
+  - "--config-name"
+  - "run_gpu_cifar10"
+  - ${args_no_hyphens}

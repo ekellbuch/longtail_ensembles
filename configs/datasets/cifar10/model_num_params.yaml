@@ -1,0 +1,68 @@
+title: cifar10
+model_type: miller
+models:
+  densenet121:
+    num_params: 0
+  densenet_cifar:
+    num_params: 0
+  dpn26:
+    num_params: 0
+  efficientnetb0:
+    num_params: 0
+  googlenet:
+    num_params: 0
+  lenet:
+    num_params: 0
+  mobilenet:
+    num_params: 0
+  mobilenetv2:
+    num_params: 0
+  pnasneta:
+    num_params: 0
+  pnasnetb:
+    num_params: 0
+  preactresnet101:
+    num_params: 0
+  preactresnet18:
+    num_params: 0
+  preactresnet34:
+    num_params: 0
+  preactresnet50:
+    num_params: 0
+  regnetx_200mf:
+    num_params: 0
+  regnetx_400mf:
+    num_params: 0
+  resnet101:
+    num_params: 0
+  resnet18:
+    num_params: 0
+  resnet34:
+    num_params: 0
+  resnext29_2x64d:
+    num_params: 0
+  resnext29_32x4d:
+    num_params: 0
+  senet18:
+    num_params: 0
+  shufflenetg2:
+    num_params: 0
+  shufflenetg3:
+    num_params: 0
+  shufflenetv2_0_5:
+    num_params: 0
+  shufflenetv2_1:
+    num_params: 0
+  shufflenetv2_1_5:
+    num_params: 0
+  shufflenetv2_2:
+    num_params: 0
+  vgg11:
+    num_params: 0
+  vgg13:
+    num_params: 0
+  vgg16:
+    num_params: 0
+  vgg19:
+    num_params: 0
+

@@ -1,0 +1,38 @@
+Comment: >
+  Run
+  wandb sweep experiments/compare_loss/train_gpu_loss_cifar10.yaml
+
+  Experiments:
+  - https://wandb.ai/ekellbuch/uncategorized/sweeps/nggmmw4m
+
+name: train_gpu_bloss_debug
+program: scripts/run.py
+method: grid
+
+metric:
+  name: loss/val
+  goal: minimize
+parameters:
+  project_name:
+    value: longtail_gpu_cifar10lt
+  seed:
+    values: [1, 2, 3, 4, 5]
+  module_cfg.temperature_scaling:
+    value: 1
+  module_cfg.module:
+    values: [base, base_bloss, weighted_softmax, weighted_ce]
+  data_cfg.test_set:
+    value: "IMBALANCECIFAR10"
+  module_cfg.classifier:
+    values: ["resnet_orig_110", "resnet32_cfa"]
+  trainer_cfg.max_epochs:
+    value: 150
+
+
+command:
+  - ${env}
+  - python
+  - ${program}
+  - "--config-name"
+  - "run_gpu_cifar10"
+  - ${args_no_hyphens}

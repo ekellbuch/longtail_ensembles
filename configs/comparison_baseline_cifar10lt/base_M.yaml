@@ -1,0 +1,63 @@
+Comment: >
+  From run 
+  5 seeds, 150 epochs
+  https://wandb.ai/ekellbuch/uncategorized/sweeps/nggmmw4m/
+  
+  additional seeds 
+  https://wandb.ai/ekellbuch/uncategorized/sweeps/0itowy8a
+  
+
+title: "CIFAR10lt_base"
+ind_dataset: "IMBALANCECIFAR10"
+ood_dataset: "cifar10_1"
+train_loss: "base_M"
+
+models:
+  resnet32_cfa:
+    filepaths:
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-20/14-42-33"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-20/14-22-45"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-20/14-02-59"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-20/13-43-13"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-20/13-23-26"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-11-01/17-22-19"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-11-01/17-10-25"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-11-01/16-57-31"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-11-01/16-45-33"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-11-01/16-33-34"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-11-01/23-38-53"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-11-01/23-26-50"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-11-01/23-14-41"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-11-01/23-02-37"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-11-01/22-50-38"
+    labelpaths:
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-20/14-42-33"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-20/14-22-45"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-20/14-02-59"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-20/13-43-13"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-20/13-23-26"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-11-01/17-22-19"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-11-01/17-10-25"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-11-01/16-57-31"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-11-01/16-45-33"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-11-01/16-33-34"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-11-01/23-38-53"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-11-01/23-26-50"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-11-01/23-14-41"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-11-01/23-02-37"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-11-01/22-50-38"
+    npz_flag:
+data_types:
+  ind:
+    base:
+      logit: "ind_preds.npy"
+      label: "ind_labels.npy"
+  ood:
+    base:
+      logit: "ood_preds.npy"
+      label: "ood_labels.npy"
+
+ensemble_types:
+  - "no_avg"
+  - "avg_logits"
+  - "avg_probs"

@@ -1,0 +1,58 @@
+Comment: >
+  From run https://wandb.ai/ekellbuch/uncategorized/sweeps/nggmmw4m/
+  5 seeds, 150 epochs
+title: "CIFAR10lt_base"
+ind_dataset: "IMBALANCECIFAR10"
+ood_dataset: "cifar10_1"
+train_loss: "base"
+
+models:
+  resnet32_cfa:
+    filepaths:
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-20/14-42-33"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-20/14-22-45"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-20/14-02-59"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-20/13-43-13"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-20/13-23-26"
+    labelpaths:
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-20/14-42-33"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-20/14-22-45"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-20/14-02-59"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-20/13-43-13"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-20/13-23-26"
+    npz_flag:
+  resnet_orig_110:
+    filepaths:
+      - /data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-19/22-25-44
+      - /data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-19/23-10-36
+      - /data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-19/23-55-41
+      - /data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-20/00-40-38
+      - /data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-20/01-25-38
+    labelpaths:
+      - /data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-19/22-25-44
+      - /data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-19/23-10-36
+      - /data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-19/23-55-41
+      - /data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-20/00-40-38
+      - /data/Projects/linear_ensembles/longtail_ensembles/outputs/23-07-20/01-25-38
+
+    npz_flag:
+data_types:
+  ind:
+    base:
+      logit: "ind_preds.npy"
+      label: "ind_labels.npy"
+    temperature:
+      logit: "ind_preds_temperature.npy"
+      label: "ind_labels_temperature.npy"
+  ood:
+    base:
+      logit: "ood_preds.npy"
+      label: "ood_labels.npy"
+    temperature:
+      logit: "ood_preds_temperature.npy"
+      label: "ood_labels_temperature.npy"
+
+ensemble_types:
+  - "no_avg"
+  - "avg_logits"
+  - "avg_probs"

@@ -1,0 +1,100 @@
+Comment: >
+  Run
+  python scripts/run.py --config-name="run_gpu_cifar100"
+  python scripts/run.py --config-name="run_gpu_cifar100" trainer_cfg.fast_dev_run=1 trainer_cfg.logger="tensorboard" eval_cfg.random_eval=1 module_cfg.temperature_scaling=0
+  python scripts/run.py --config-name="run_gpu_cifar100" trainer_cfg.fast_dev_run=1 trainer_cfg.logger="tensorboard" eval_cfg.random_eval=1 module_cfg.temperature_scaling=1
+
+  # single gpu run with wandb
+  python scripts/run.py --config-name="run_gpu_cifar100" trainer_cfg.fast_dev_run=1 trainer_cfg.logger="wandb" eval_cfg.random_eval=1 module_cfg.temperature_scaling=1
+
+  # multi gpu run, no wandb, no temperature scaling
+  python scripts/run.py --config-name="run_gpu_cifar100" trainer_cfg.fast_dev_run=1 trainer_cfg.logger="tensorboard" eval_cfg.random_eval=1 module_cfg.temperature_scaling=0 trainer_cfg.gpus=4 trainer_cfg.accelerator=ddp
+  
+  # debug learning rate
+  python scripts/run.py --config-name="run_gpu_cifar100" eval_cfg.random_eval=1 module_cfg.temperature_scaling=0 trainer_cfg.max_epochs=10 project_name="debug_lr" module_cfg.scheduler=cosine_balms
+
+project_name: longtail_gpu_cifar100
+
+# Program arguments:
+data_cfg:
+  test_set: "CIFAR100"
+  data_dir: ${oc.env:HOME}/pytorch_datasets
+  ood_dataset: CIFAR10
+  corruption: null  # -c corruption_type
+  level: null  # -c corruption_level
+  version: v4  # cifar10_1 version v4 or v6
+  num_classes: 100
+  samples_per_class: null
+  batch_size: 256
+  num_workers: 32
+  valid_size: 0.1  # assign val_set 0.1*train_set size
+  imb_type: exp   # params for imbalanced cifar10/0
+  imb_factor: 0.005  # params for imbalanced cifar10/0
+  seed: 0
+
+trainer_cfg:
+  fast_dev_run: 0
+  logger: "wandb"
+  deterministic: false
+  log_every_n_steps: 50
+  max_epochs: 160
+  precision: 32
+  devices: auto
+  accelerator: auto
+  val_check_interval: 1.0
+  plugins: null
+
+fit_cfg:
+  ckpt_path: null
+
+# training flags
+eval_cfg:
+  test_phase: 0
+  softmax: 0
+  store_split: 0
+  random_eval: 0  # random eval do not store logits.
+  store_train: 0
+  return_model: 0
+
+seed: null  # seed everything
+
+module_cfg:
+  module: base
+  classifier: resnet_orig_110
+  pretrained: 0
+  pretrained-path: null
+  learning_rate: 1e-1
+  weight_decay: 5e-4
+  lamb: 0.5
+  scheduler: step
+  nb_models: 4
+  gamma: 1
+  temperature_scaling: 1
+  checkpoint: null
+  samples_per_class: null
+  warmup_epochs: null  #only if scheduler is cosine_fwarmup
+
+
+callbacks:
+  gradnorm: 0
+  checkpoint_callback: 1
+  early_stopping: 0
+  lr_monitor: 1
+
+# Early stopping parameters
+early_stop_cfg:
+  monitor: loss/val
+  mode: min
+  verbose: true
+  min_delta: 0.0001
+  patience: 10  # related to val_check_interval
+
+# Temperature scaling parameters
+ts_cfg:
+  use_train_loss: false  # if False, uses cross entropy loss
+  max_epochs: 1
+  init_temp: 1.5  # init temperature
+
+hydra:
+  run:
+    dir: ./outputs/${now:%y-%m-%d}/${now:%H-%M-%S}

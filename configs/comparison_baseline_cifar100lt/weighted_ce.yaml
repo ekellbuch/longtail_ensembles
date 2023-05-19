@@ -1,0 +1,59 @@
+Comment: >
+  From run:
+  https://wandb.ai/ekellbuch/longtail_gpu_cifar100lt_temperature_scaling?workspace=user-ekellbuch
+  https://wandb.ai/ekellbuch/longtail_ensembles-scripts/sweeps/9hwaytks
+  weighted_base module, 4 seeds
+title: "CIFAR100lt_weighted_ce"
+ind_dataset: "IMBALANCECIFAR100"
+ood_dataset: "cifar10"
+train_loss: "weighted_ce"
+models:
+  resnet32_cfa:
+    filepaths:
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-08-01/11-26-51/outputs/23-08-01/11-27-43/outputs/23-08-01/11-28-31/outputs/23-08-01/11-29-20/outputs/23-08-01/11-30-11/outputs/23-08-01/11-31-04/outputs/23-08-01/11-31-56/outputs/23-08-01/11-32-46/outputs/23-08-01/11-33-35/outputs/23-08-01/11-34-26/outputs/23-08-01/11-35-18/outputs/23-08-01/11-36-11/outputs/23-08-01/11-37-00/outputs/23-08-01/11-37-54/outputs/23-08-01/11-38-45/outputs/23-08-01/11-39-36/outputs/23-08-01/11-40-29/outputs/23-08-01/11-41-07/outputs/23-08-01/11-41-45/outputs/23-08-01/11-42-25"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-08-01/11-26-51/outputs/23-08-01/11-27-43/outputs/23-08-01/11-28-31/outputs/23-08-01/11-29-20/outputs/23-08-01/11-30-11/outputs/23-08-01/11-31-04/outputs/23-08-01/11-31-56/outputs/23-08-01/11-32-46/outputs/23-08-01/11-33-35/outputs/23-08-01/11-34-26/outputs/23-08-01/11-35-18/outputs/23-08-01/11-36-11/outputs/23-08-01/11-37-00/outputs/23-08-01/11-37-54/outputs/23-08-01/11-38-45/outputs/23-08-01/11-39-36/outputs/23-08-01/11-40-29/outputs/23-08-01/11-41-07/outputs/23-08-01/11-41-45"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-08-01/11-26-51/outputs/23-08-01/11-27-43/outputs/23-08-01/11-28-31/outputs/23-08-01/11-29-20/outputs/23-08-01/11-30-11/outputs/23-08-01/11-31-04/outputs/23-08-01/11-31-56/outputs/23-08-01/11-32-46/outputs/23-08-01/11-33-35/outputs/23-08-01/11-34-26/outputs/23-08-01/11-35-18/outputs/23-08-01/11-36-11/outputs/23-08-01/11-37-00/outputs/23-08-01/11-37-54/outputs/23-08-01/11-38-45/outputs/23-08-01/11-39-36/outputs/23-08-01/11-40-29/outputs/23-08-01/11-41-07"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-08-01/11-26-51/outputs/23-08-01/11-27-43/outputs/23-08-01/11-28-31/outputs/23-08-01/11-29-20/outputs/23-08-01/11-30-11/outputs/23-08-01/11-31-04/outputs/23-08-01/11-31-56/outputs/23-08-01/11-32-46/outputs/23-08-01/11-33-35/outputs/23-08-01/11-34-26/outputs/23-08-01/11-35-18/outputs/23-08-01/11-36-11/outputs/23-08-01/11-37-00/outputs/23-08-01/11-37-54/outputs/23-08-01/11-38-45/outputs/23-08-01/11-39-36/outputs/23-08-01/11-40-29"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-10-02/13-14-21"
+    labelpaths:
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-08-01/11-26-51/outputs/23-08-01/11-27-43/outputs/23-08-01/11-28-31/outputs/23-08-01/11-29-20/outputs/23-08-01/11-30-11/outputs/23-08-01/11-31-04/outputs/23-08-01/11-31-56/outputs/23-08-01/11-32-46/outputs/23-08-01/11-33-35/outputs/23-08-01/11-34-26/outputs/23-08-01/11-35-18/outputs/23-08-01/11-36-11/outputs/23-08-01/11-37-00/outputs/23-08-01/11-37-54/outputs/23-08-01/11-38-45/outputs/23-08-01/11-39-36/outputs/23-08-01/11-40-29/outputs/23-08-01/11-41-07/outputs/23-08-01/11-41-45/outputs/23-08-01/11-42-25"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-08-01/11-26-51/outputs/23-08-01/11-27-43/outputs/23-08-01/11-28-31/outputs/23-08-01/11-29-20/outputs/23-08-01/11-30-11/outputs/23-08-01/11-31-04/outputs/23-08-01/11-31-56/outputs/23-08-01/11-32-46/outputs/23-08-01/11-33-35/outputs/23-08-01/11-34-26/outputs/23-08-01/11-35-18/outputs/23-08-01/11-36-11/outputs/23-08-01/11-37-00/outputs/23-08-01/11-37-54/outputs/23-08-01/11-38-45/outputs/23-08-01/11-39-36/outputs/23-08-01/11-40-29/outputs/23-08-01/11-41-07/outputs/23-08-01/11-41-45"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-08-01/11-26-51/outputs/23-08-01/11-27-43/outputs/23-08-01/11-28-31/outputs/23-08-01/11-29-20/outputs/23-08-01/11-30-11/outputs/23-08-01/11-31-04/outputs/23-08-01/11-31-56/outputs/23-08-01/11-32-46/outputs/23-08-01/11-33-35/outputs/23-08-01/11-34-26/outputs/23-08-01/11-35-18/outputs/23-08-01/11-36-11/outputs/23-08-01/11-37-00/outputs/23-08-01/11-37-54/outputs/23-08-01/11-38-45/outputs/23-08-01/11-39-36/outputs/23-08-01/11-40-29/outputs/23-08-01/11-41-07"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-08-01/11-26-51/outputs/23-08-01/11-27-43/outputs/23-08-01/11-28-31/outputs/23-08-01/11-29-20/outputs/23-08-01/11-30-11/outputs/23-08-01/11-31-04/outputs/23-08-01/11-31-56/outputs/23-08-01/11-32-46/outputs/23-08-01/11-33-35/outputs/23-08-01/11-34-26/outputs/23-08-01/11-35-18/outputs/23-08-01/11-36-11/outputs/23-08-01/11-37-00/outputs/23-08-01/11-37-54/outputs/23-08-01/11-38-45/outputs/23-08-01/11-39-36/outputs/23-08-01/11-40-29"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-10-02/13-14-21"
+    npz_flag:
+  resnet_orig_110:
+    filepaths:
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-08-01/11-26-51/outputs/23-08-01/11-27-43/outputs/23-08-01/11-28-31/outputs/23-08-01/11-29-20"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-08-01/11-26-51/outputs/23-08-01/11-27-43/outputs/23-08-01/11-28-31"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-08-01/11-26-51/outputs/23-08-01/11-27-43"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-08-01/11-26-51"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-10-02/13-10-58"
+    labelpaths:
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-08-01/11-26-51/outputs/23-08-01/11-27-43/outputs/23-08-01/11-28-31/outputs/23-08-01/11-29-20"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-08-01/11-26-51/outputs/23-08-01/11-27-43/outputs/23-08-01/11-28-31"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-08-01/11-26-51/outputs/23-08-01/11-27-43"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-08-01/11-26-51"
+      - "/data/Projects/linear_ensembles/longtail_ensembles/outputs/23-10-02/13-10-58"
+    npz_flag:
+
+data_types:
+  ind:
+    base:
+      logit: "ind_preds.npy"
+      label: "ind_labels.npy"
+    temperature:
+      logit: "ind_preds_temperature.npy"
+      label: "ind_labels_temperature.npy"
+  ood:
+    base:
+      logit: "ood_CIFAR10_preds.npy"
+      label: "ood_CIFAR10_labels.npy"
+    temperature:
+      logit: "ood_CIFAR10_preds_temperature.npy"
+      label: "ood_CIFAR10_labels_temperature.npy"
+
+ensemble_types:
+  - "no_avg"
+  - "avg_logits"
+  - "avg_probs"

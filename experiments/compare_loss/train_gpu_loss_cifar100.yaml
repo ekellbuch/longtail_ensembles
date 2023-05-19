@@ -1,0 +1,56 @@
+Comment: >
+  Run
+  wandb sweep experiments/compare_loss/train_gpu_loss_cifar100.yaml
+  
+  Experiments:
+  - run seed 1, 2, 3, 4
+  https://wandb.ai/ekellbuch/longtail_ensembles-scripts/sweeps/9hwaytks
+  - seed =5 
+  https://wandb.ai/ekellbuch/longtail_ensembles-scripts/sweeps/gv4bucon
+
+name: train_gpu_cifar100_debug
+program: scripts/run.py
+method: grid
+
+metric:
+  name: loss/val
+  goal: minimize
+parameters:
+  project_name:
+    value: longtail_gpu_cifar100lt
+  module_cfg.temperature_scaling:
+    value: 0
+  module_cfg.module:
+    values: [ base, base_bloss, weighted_softmax, weighted_ce ]
+  data_cfg.test_set:
+    values: [ "IMBALANCECIFAR100Aug" ]
+  module_cfg.classifier:
+    values: [ "resnet32_cfa", "resnet_orig_110" ]
+  trainer_cfg.max_epochs:
+    values: [ 220 ]
+  eval_cfg.random_eval:
+    value: 1
+  module_cfg.learning_rate:
+    values: [ 0.1 ]
+  module_cfg.weight_decay:
+    values: [ 0.0005 ]
+  module_cfg.scheduler:
+    values: [ step_ldam ]
+  data_cfg.imb_factor:
+    value: 0.01
+  data_cfg.batch_size:
+    value: 512
+  data_cfg.valid_size:
+    value: 0.1
+  seed:
+    values: [1, 2, 3, 4, 5]
+
+
+
+command:
+  - ${env}
+  - python
+  - ${program}
+  - "--config-name"
+  - "run_gpu_cifar100"
+  - ${args_no_hyphens}

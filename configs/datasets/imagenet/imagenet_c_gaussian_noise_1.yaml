@@ -1,0 +1,609 @@
+# File with all logits of model trained on imagenet and evaluated on imagenet
+title: "ImageNetC Gaussian Noise 1" # Title for the resulting plot.
+train_set: "imagenet"
+test_set: "imagenet_c_gaussian_noise_1"
+model_family: "Neural Network"
+models:
+  FixPNASNet:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_FixPNASNet.pickle
+  FixResNet50:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_FixResNet50.pickle
+  FixResNet50_no_adaptation:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_FixResNet50_no_adaptation.pickle
+  FixResNet50_v2:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_FixResNet50_v2.pickle
+  alexnet:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_alexnet.pickle
+  bninception:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_bninception.pickle
+  cafferesnet101:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_cafferesnet101.pickle
+  densenet121:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_densenet121.pickle
+  densenet161:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_densenet161.pickle
+  densenet169:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_densenet169.pickle
+  densenet201:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_densenet201.pickle
+  dpn131:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_dpn131.pickle
+  dpn68:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_dpn68.pickle
+  dpn98:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_dpn98.pickle
+  efficientnet-b0:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_efficientnet-b0.pickle
+  efficientnet-b0-autoaug:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_efficientnet-b0-autoaug.pickle
+  efficientnet-b1:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_efficientnet-b1.pickle
+  efficientnet-b1-autoaug:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_efficientnet-b1-autoaug.pickle
+  efficientnet-b2:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_efficientnet-b2.pickle
+  efficientnet-b2-autoaug:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_efficientnet-b2-autoaug.pickle
+  efficientnet-b3:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_efficientnet-b3.pickle
+  efficientnet-b3-autoaug:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_efficientnet-b3-autoaug.pickle
+  efficientnet-b4:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_efficientnet-b4.pickle
+  efficientnet-b4-autoaug:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_efficientnet-b4-autoaug.pickle
+  efficientnet-b5:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_efficientnet-b5.pickle
+  efficientnet-b5-autoaug:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_efficientnet-b5-autoaug.pickle
+  efficientnet-b5-randaug:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_efficientnet-b5-randaug.pickle
+  efficientnet-b6-autoaug:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_efficientnet-b6-autoaug.pickle
+  efficientnet-b7-autoaug:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_efficientnet-b7-autoaug.pickle
+  efficientnet-b7-randaug:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_efficientnet-b7-randaug.pickle
+  fbresnet152:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_fbresnet152.pickle
+  googlenet_inceptionv1:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_googlenet_inceptionv1.pickle
+  inceptionresnetv2:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_inceptionresnetv2.pickle
+  inceptionv3:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_inceptionv3.pickle
+  inceptionv4:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_inceptionv4.pickle
+  mnasnet0_5:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_mnasnet0_5.pickle
+  mnasnet1_0:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_mnasnet1_0.pickle
+  mobilenet_v2:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_mobilenet_v2.pickle
+  nasnetalarge:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_nasnetalarge.pickle
+  nasnetamobile:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_nasnetamobile.pickle
+  pnasnet5large:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_pnasnet5large.pickle
+  polynet:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_polynet.pickle
+  resnet101:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_resnet101.pickle
+  resnet152:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_resnet152.pickle
+  resnet18:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_resnet18.pickle
+  resnet34:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_resnet34.pickle
+  resnet50:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_resnet50.pickle
+  resnet50-vtab:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_resnet50-vtab.pickle
+  resnet50-vtab-exemplar:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_resnet50-vtab-exemplar.pickle
+  resnet50-vtab-rotation:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_resnet50-vtab-rotation.pickle
+  resnet50-vtab-semi-exemplar:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_resnet50-vtab-semi-exemplar.pickle
+  resnet50-vtab-semi-rotation:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_resnet50-vtab-semi-rotation.pickle
+  resnet50_aws_baseline:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_resnet50_aws_baseline.pickle
+  resnext101_32x4d:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_resnext101_32x4d.pickle
+  resnext101_32x8d:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_resnext101_32x8d.pickle
+  resnext101_64x4d:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_resnext101_64x4d.pickle
+  resnext50_32x4d:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_resnext50_32x4d.pickle
+  se_resnet101:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_se_resnet101.pickle
+  se_resnet152:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_se_resnet152.pickle
+  se_resnet50:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_se_resnet50.pickle
+  se_resnext101_32x4d:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_se_resnext101_32x4d.pickle
+  se_resnext50_32x4d:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_se_resnext50_32x4d.pickle
+  senet154:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_senet154.pickle
+  shufflenet_v2_x0_5:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_shufflenet_v2_x0_5.pickle
+  shufflenet_v2_x1_0:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_shufflenet_v2_x1_0.pickle
+  squeezenet1_0:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_squeezenet1_0.pickle
+  squeezenet1_1:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_squeezenet1_1.pickle
+  vgg11:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_vgg11.pickle
+  vgg11_bn:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_vgg11_bn.pickle
+  vgg13:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_vgg13.pickle
+  vgg13_bn:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_vgg13_bn.pickle
+  vgg16:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_vgg16.pickle
+  vgg16_bn:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_vgg16_bn.pickle
+  vgg19:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_vgg19.pickle
+  vgg19_bn:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_vgg19_bn.pickle
+  wide_resnet101_2:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_wide_resnet101_2.pickle
+  wide_resnet50_2:
+    hyperparameters: 
+    -
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_wide_resnet50_2.pickle
+  xception:
+    hyperparameters: 
+    - 
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /datahd3a/imagenet_testbest_outputs/logits/imagenet-c.gaussian_noise.1_on-disk/imagenet-c.gaussian_noise.1_on-disk_|_xception.pickle
+  deepens_alexnet:
+    hyperparameters: 
+    - (seed=1)
+    - (seed=2)
+    - (seed=3)
+    - (seed=4)
+    - (seed=5)
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/results/imagenetc/logits/alexnet--imagenetc--deepens1--gaussian_noise--1.hdf5
+    - /data/Projects/linear_ensembles/interp_ensembles/results/imagenetc/logits/alexnet--imagenetc--deepens2--gaussian_noise--1.hdf5
+    - /data/Projects/linear_ensembles/interp_ensembles/results/imagenetc/logits/alexnet--imagenetc--deepens3--gaussian_noise--1.hdf5
+    - /data/Projects/linear_ensembles/interp_ensembles/results/imagenetc/logits/alexnet--imagenetc--deepens4--gaussian_noise--1.hdf5
+    - /data/Projects/linear_ensembles/interp_ensembles/results/imagenetc/logits/alexnet--imagenetc--deepens5--gaussian_noise--1.hdf5
+  deepens_resnet101:
+    hyperparameters: 
+    - (seed=1)
+    - (seed=2)
+    - (seed=3)
+    - (seed=4)
+    - (seed=5)
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/results/imagenetc/logits/resnet101--imagenetc--deepens1--gaussian_noise--1.hdf5
+    - /data/Projects/linear_ensembles/interp_ensembles/results/imagenetc/logits/resnet101--imagenetc--deepens2--gaussian_noise--1.hdf5
+    - /data/Projects/linear_ensembles/interp_ensembles/results/imagenetc/logits/resnet101--imagenetc--deepens3--gaussian_noise--1.hdf5
+    - /data/Projects/linear_ensembles/interp_ensembles/results/imagenetc/logits/resnet101--imagenetc--deepens4--gaussian_noise--1.hdf5
+    - /data/Projects/linear_ensembles/interp_ensembles/results/imagenetc/logits/resnet101--imagenetc--deepens5--gaussian_noise--1.hdf5
+  deepens_resnet50:
+    hyperparameters: 
+    - (seed=1)
+    - (seed=2)
+    - (seed=3)
+    - (seed=4)
+    - (seed=5)
+    labelpaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    - /data/Projects/linear_ensembles/interp_ensembles/data/imagenet_targets/val.npy
+    filepaths:
+    - /data/Projects/linear_ensembles/interp_ensembles/results/imagenetc/logits/resnet50--imagenetc--deepens1--gaussian_noise--1.hdf5
+    - /data/Projects/linear_ensembles/interp_ensembles/results/imagenetc/logits/resnet50--imagenetc--deepens2--gaussian_noise--1.hdf5
+    - /data/Projects/linear_ensembles/interp_ensembles/results/imagenetc/logits/resnet50--imagenetc--deepens3--gaussian_noise--1.hdf5
+    - /data/Projects/linear_ensembles/interp_ensembles/results/imagenetc/logits/resnet50--imagenetc--deepens4--gaussian_noise--1.hdf5
+    - /data/Projects/linear_ensembles/interp_ensembles/results/imagenetc/logits/resnet50--imagenetc--deepens5--gaussian_noise--1.hdf5

@@ -1,0 +1,37 @@
+Comment: >
+  From run https://wandb.ai/ekellbuch/uncategorized/sweeps/nggmmw4m/
+  base module, 4 seeds, 150 epochs.
+title: "CIFAR10lt_baseline"
+ind_dataset: "IMBALANCECIFAR10"
+ood_dataset: "cifar10_1"
+
+config_path: "/data/Projects/linear_ensembles/longtail_ensembles/configs/comparison_baseline_cifar10lt"
+
+train_loss:
+ - "base"
+ - "base_bloss"
+ - "weighted_ce"
+ - "weighted_softmax"
+
+models:
+  - "resnet32_cfa"
+  - "resnet_orig_110"
+
+seeds:
+    - 0
+    - 1
+    - 2
+    - 3
+
+ensemble_types:
+  - "no_avg"
+  - "avg_logits"
+  - "avg_probs"
+
+data_types:
+  - "ind"
+  - "ood"
+
+sdata_types:
+  - "base"
+  - "temperature"

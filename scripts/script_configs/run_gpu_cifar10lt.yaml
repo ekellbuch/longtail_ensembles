@@ -1,0 +1,127 @@
+Comment: >
+  Note config in 
+  https://github.com/jiawei-ren/BalancedMetaSoftmax-Classification/blob/main/config/CIFAR10_LT/balanced_softmax_imba200.yaml
+  and code in:
+  https://github.com/facebookresearch/classifier-balancing/blob/main/run_networks.py
+
+  Run:
+  python scripts/run.py --config-name="run_gpu_cifar10lt" eval_cfg.random_eval=1
+  
+  Debug:
+  # single cpu check
+  python scripts/run.py --config-name="run_gpu_cifar10lt" trainer_cfg.fast_dev_run=1 eval_cfg.random_eval=1 trainer_cfg.logger="tensorboard" trainer_cfg.gpus=null data_cfg.num_workers=8
+
+  # single gpu check
+  python scripts/run.py --config-name="run_gpu_cifar10lt" trainer_cfg.fast_dev_run=1 eval_cfg.random_eval=1 trainer_cfg.logger="tensorboard"
+
+  # multi gpu check
+  python scripts/run.py --config-name="run_gpu_cifar10lt" trainer_cfg.gpus=4 trainer_cfg.accelerator="ddp" trainer_cfg.fast_dev_run=1 eval_cfg.random_eval=1 trainer_cfg.logger="tensorboard"
+
+  # --------- Runs -------------------------
+
+  - interval epoch: 35% instead of 71%???
+  https://wandb.ai/ekellbuch/longtail_gpu_cifar10lt/runs/1sqa6ifn
+  
+  - interval step: 54%
+  https://wandb.ai/ekellbuch/longtail_gpu_cifar10lt/runs/2lqb87d6
+
+  - batch_size = 512: 52%
+  https://wandb.ai/ekellbuch/longtail_gpu_cifar10lt/runs/39blhpmu
+
+  - same params as cifar100: 55%
+  python scripts/run.py --config-name="run_gpu_cifar10lt" eval_cfg.random_eval=1 trainer_cfg.max_epochs=160 module_cfg.learning_rate=0.1 module_cfg.weight_decay=0.0005 module_cfg.scheduler=step
+  https://wandb.ai/ekellbuch/longtail_gpu_cifar10lt/runs/hvdi3dtn
+
+  - using data same augmentation as balms
+  todo
+  
+  - train model with cosine_fwarmup 
+  python scripts/run.py --config-name="run_gpu_cifar10lt" eval_cfg.random_eval=1 trainer_cfg.max_epochs=150 module_cfg.learning_rate=0.01 module_cfg.weight_decay=0.01 module_cfg.scheduler=cosine_fwarmup module_cfg.warmup_epochs=50
+
+  python scripts/run.py --config-name="run_gpu_cifar10lt" eval_cfg.random_eval=1 trainer_cfg.max_epochs=160 module_cfg.learning_rate=1e-2 module_cfg.weight_decay=1e-2 module_cfg.scheduler=cosine_warm --module_cfg.
+
+project_name: longtail_gpu_cifar10ltaug
+
+# Program arguments:
+data_cfg:
+  test_set: "IMBALANCECIFAR10"
+  data_dir: ${oc.env:HOME}/pytorch_datasets
+  ood_dataset: cifar10_1
+  corruption: null  # -c corruption_type
+  level: null  # -c corruption_level
+  version: v4  # cifar10_1 version v4 or v6
+  num_classes: 10
+  samples_per_class: null
+  batch_size: 512
+  num_workers: 32
+  seed: 0
+  valid_size: 0  # assign val_set 0.1*train_set size
+  imb_type: exp   # params for imbalanced cifar10/0
+  imb_factor: 0.005  # params for imbalanced cifar10/0
+
+
+trainer_cfg:
+  fast_dev_run: 0
+  logger: "wandb"
+  deterministic: false
+  log_every_n_steps: 50
+  max_epochs: 260
+  precision: 32
+  devices: auto
+  accelerator: auto
+  val_check_interval: 1.0
+  plugins: null
+
+fit_cfg:
+  ckpt_path: null
+
+# training flags
+eval_cfg:
+  test_phase: 0
+  softmax: 0
+  store_split: 0
+  random_eval: 0  # random eval do not store logits.
+  store_train: 0
+  return_model: 0
+
+seed: null
+
+module_cfg:
+  module: base
+  classifier: resnet32_cfa
+  pretrained: 0
+  pretrained-path: null
+  learning_rate: 0.1
+  weight_decay: 0.0005
+  lamb: 0.5
+  scheduler: cosine_anneal
+  warmup_epochs: 20  # warmup iters not epochs
+  nb_models: 4
+  gamma: 1
+  temperature_scaling: 0
+  checkpoint: null
+  samples_per_class: null
+
+callbacks:
+  gradnorm: 0
+  checkpoint_callback: 1
+  early_stopping: 0
+  lr_monitor: 1
+
+early_stop_cfg:
+  monitor: loss/val
+  mode: min
+  patience: 10  # related to val_check_interval
+  min_delta: 0.0001
+
+
+# Temperature scaling parameters
+ts_cfg:
+  use_train_loss: false  # if False, uses cross entropy loss
+  max_epochs: 1
+  init_temp: 1.5  # init temperature
+  ts_module: "ts_base" # ts and ts_vector
+
+hydra:
+  run:
+    dir: ./outputs/${now:%y-%m-%d}/${now:%H-%M-%S}

@@ -1,0 +1,37 @@
+Comment: >
+  https://wandb.ai/ekellbuch/longtail_gpu_cifar100lt_temperature_scaling?workspace=user-ekellbuch
+  https://wandb.ai/ekellbuch/longtail_ensembles-scripts/sweeps/9hwaytks
+title: "CIFAR100lt_baseline"
+ind_dataset: "IMBALANCECIFAR100"
+ood_dataset: "CIFAR10"
+
+config_path: "/data/Projects/linear_ensembles/longtail_ensembles/configs/comparison_baseline_cifar100lt"
+
+train_loss:
+ - "base"
+ - "base_bloss"
+ - "weighted_ce"
+ - "weighted_softmax"
+
+models:
+  - "resnet32_cfa"
+  - "resnet_orig_110"
+
+seeds:
+    - 0
+    - 1
+    - 2
+    - 3
+
+ensemble_types:
+  - "no_avg"
+  - "avg_logits"
+  - "avg_probs"
+
+data_types:
+  - "ind"
+  - "ood"
+
+sdata_types:
+  - "base"
+  - "temperature"
