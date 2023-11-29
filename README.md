@@ -18,11 +18,11 @@ Installation instructions in docs/README.md: [docs/README.md](docs/README.md)
 ```
 python scripts/run.py --config-name="run_gpu_cifar10"
 ```
-2. Train resnet32 and resnet110 model on CIFAR10LT dataset across multiple losses
+2. Train models on CIFAR10LT dataset across multiple losses
 ```
 wandb sweep experiments/compare_loss/train_gpu_loss_cifar10.yaml
 ```
-3. Train resnet32 model on CIFAR10LT dataset across multiple losses
+3. Train additional models on CIFAR10LT. 
 ```
 wandb sweep experiments/compare_loss/train_gpu_loss_cifar10_largeM.yaml
 ```
@@ -38,12 +38,12 @@ wandb sweep experiments/compare_loss/train_gpu_loss_cifar10_largeM.yaml
 # Reproduce paper tables and figures:
 - [x] Fig: Ensemble size vs ensemble type across multiple losses
 ```
-python scripts/vis_scripts/plot_results_metric_M.py --config-path="../../configs/comparison_baseline_cifar10lt" --config-name="compare_M"
+python scripts/vis_scripts/plot_results_metric_M.py --config-path="../../results/configs/comparison_baseline_cifar10lt" --config-name="compare_M"
 ```
 - [x] Table: Ensemble performance of models trained on  CIFAR10-LT and CIFAR100-LT:
 ```
-python scripts/compare_all_results.py --config-path="../configs/comparison_baseline_cifar10lt" --config-name="default"
-python scripts/compare_all_results.py --config-path="../configs/comparison_baseline_cifar100lt" --config-name="default"
+python scripts/compare_all_results.py --config-path="../results/configs/comparison_baseline_cifar10lt" --config-name="default"
+python scripts/compare_all_results.py --config-path="../results/configs/comparison_baseline_cifar100lt" --config-name="default"
 ```
 - [x] Fig: Class ID vs avg. Disagreement:
 ```
@@ -58,6 +58,5 @@ python scripts/vis_scripts/plot_results_dkl_diff.py
 python scripts/vis_scripts/plot_single_metric_xy.py --datasets=base --metric=error
 ```
 
-# Other implementations
-
+# References:
 -  Balanced Meta Softmax: [github.com/jiawei-ren/BalancedMetaSoftmax-Classification](https://github.com/jiawei-ren/BalancedMetaSoftmax-Classification)
