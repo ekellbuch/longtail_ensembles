@@ -318,10 +318,10 @@ class CIFAR10Module(CIFAR10_Models):
     def on_test_epoch_end(self):
         self._calc_agg_metrics(stage='epoch/test_')
 
-    def on_val_epoch_start(self):
+    def on_validation_epoch_start(self):
         self._reset_agg_metrics()
 
-    def on_val_epoch_end(self):
+    def on_validation_epoch_end(self):
         self._calc_agg_metrics(stage='epoch/val_')
 
 class CIFAR10EnsembleModule(CIFAR10_Models):
