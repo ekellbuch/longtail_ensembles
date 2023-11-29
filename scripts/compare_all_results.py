@@ -1,8 +1,8 @@
 """
 calculate the metrics for different ensemble types
 
-python scripts/compare_all_results.py --config-path="../configs/comparison_baseline_cifar10lt" --config-name="default"
-python scripts/compare_all_results.py --config-path="../configs/comparison_baseline_cifar100lt" --config-name="default"
+python scripts/compare_all_results.py --config-path="../configs/results/comparison_baseline_cifar10lt" --config-name="default"
+python scripts/compare_all_results.py --config-path="../configs/results/comparison_baseline_cifar100lt" --config-name="default"
 """
 import pandas as pd
 import hydra
@@ -11,7 +11,7 @@ from longtail_ensembles.utils_print import process_experiment_logits
 import yaml
 import numpy as np
 
-@hydra.main(config_path="../configs/comparison_baseline_cifar10lt", config_name="default", version_base=None)
+@hydra.main(config_path="../results/configs/comparison_baseline_cifar10lt", config_name="default", version_base=None)
 def main(args):
   compare_results_losses(args)
 
@@ -91,7 +91,7 @@ def compare_results_losses(args):
     # sort the order
     df_reset['Train Loss'] = df_reset['Train Loss'].map(custom_order_train)
     df_reset['Ensemble Type'] = df_reset['Ensemble Type'].map(custom_order_ensemble)
-    df_sorted = df_reset.sort_values(by=['Train Loss','Ensemble Type'])
+    df_sorted = df_reset.sort_values(by=['Train Loss', 'Ensemble Type'])
     # change name again
     reorder_train = {value: key for key, value in custom_order_train.items()}
     reorder_etype = {value: key for key, value in custom_order_ensemble.items()}

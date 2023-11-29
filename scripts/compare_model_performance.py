@@ -1,18 +1,16 @@
 """
-Evaluate the performance of each mode
-
-CIFAR10: worse performance in terms of brier and ece?
-python scripts/compare_model_performance.py --config-path="../configs/comparison_baseline_cifar10" --config-name="base"
+Given yaml files with the locations of logits,
+for ensembles of models trained using the same loss and evaluate the performance.
 
 CIFAR10-LT:
-python scripts/compare_model_performance.py --config-path="../configs/comparison_baseline_cifar10lt" --config-name="base"
-python scripts/compare_model_performance.py --config-path="../configs/comparison_baseline_cifar10lt" --config-name="base_bloss"
-python scripts/compare_model_performance.py --config-path="../configs/comparison_baseline_cifar10lt" --config-name="weighted_base"
+python scripts/compare_model_performance.py --config-path="../results/configs/comparison_baseline_cifar10lt" --config-name="base"
+python scripts/compare_model_performance.py --config-path="../results/configs/comparison_baseline_cifar10lt" --config-name="base_bloss"
+python scripts/compare_model_performance.py --config-path="../results/configs/comparison_baseline_cifar10lt" --config-name="weighted_base"
 
 CIFAR100lt:
-python scripts/compare_model_performance.py --config-path="../configs/comparison_baseline_cifar100lt" --config-name="base"
-python scripts/compare_model_performance.py --config-path="../configs/comparison_baseline_cifar100lt" --config-name="base_bloss"
-python scripts/compare_model_performance.py --config-path="../configs/comparison_baseline_cifar100lt" --config-name="weighted_base"
+python scripts/compare_model_performance.py --config-path="../results/configs/comparison_baseline_cifar100lt" --config-name="base"
+python scripts/compare_model_performance.py --config-path="../results/configs/comparison_baseline_cifar100lt" --config-name="base_bloss"
+python scripts/compare_model_performance.py --config-path="../results/configs/comparison_baseline_cifar100lt" --config-name="weighted_base"
 """
 from longtail_ensembles.predictions import Model
 from itertools import combinations
@@ -30,7 +28,7 @@ def get_player_score(perf):
 
 
 #%%
-@hydra.main(config_path="../configs/comparison_baseline_cifar10", config_name="base",version_base=None)
+@hydra.main(config_path="../results/configs/comparison_baseline_cifar10", config_name="base", version_base=None)
 def main(args):
   results = []
 

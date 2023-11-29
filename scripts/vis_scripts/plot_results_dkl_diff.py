@@ -21,7 +21,7 @@ output_dir = BASE_DIR / "results"
 plt.style.use(os.path.join(str(BASE_DIR), "scripts/vis_scripts/stylesheet.mplstyle"))
 
 
-@hydra.main(config_path="../../configs/comparison_baseline_cifar10lt", config_name="default", version_base=None)
+@hydra.main(config_path="../../results/configs/comparison_baseline_cifar10lt", config_name="default", version_base=None)
 def main(args):
   plot_p_class_box(args)
 

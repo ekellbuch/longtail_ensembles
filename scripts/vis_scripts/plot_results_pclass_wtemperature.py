@@ -1,7 +1,7 @@
 """
 Plot results for each class per configuration.
-python scripts/vis_scripts/plot_results_pclass_wtemperature.py --config-path="../../configs/comparison_baseline_cifar10lt" --config-name="default"
-python scripts/vis_scripts/plot_results_pclass_wtemperature.py --config-path="../../configs/comparison_baseline_cifar100lt" --config-name="default"
+python scripts/vis_scripts/plot_results_pclass_wtemperature.py --config-path="../../results/configs/comparison_baseline_cifar10lt" --config-name="default"
+python scripts/vis_scripts/plot_results_pclass_wtemperature.py --config-path="../../results/configs/comparison_baseline_cifar100lt" --config-name="default"
 Plots results comparing performance for each class with temperature scaling
 """
 import hydra
@@ -30,7 +30,7 @@ plt.style.use(os.path.join(str(BASE_DIR), "scripts/vis_scripts/stylesheet.mplsty
 output_dir = BASE_DIR / "results"
 
 
-@hydra.main(config_path="../../configs/comparison_baseline_cifar10lt", config_name="default", version_base=None)
+@hydra.main(config_path="../../results/configs/comparison_baseline_cifar10lt", config_name="default", version_base=None)
 def main(args):
   plot_p_class_box(args)
 

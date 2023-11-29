@@ -1,7 +1,6 @@
 """
-Make plot ensemble_size vs metric:
-python scripts/vis_scripts/plot_results_metric_M.py --config-path="../../configs/comparison_baseline_cifar10lt" --config-name="compare_M"
-
+Make plot ensemble_size vs metric
+python scripts/vis_scripts/plot_results_metric_M.py --config-path="../../results/configs/comparison_baseline_cifar10lt" --config-name="compare_M"
 """
 import hydra
 import os
@@ -29,7 +28,7 @@ plt.style.use(os.path.join(str(BASE_DIR), "scripts/vis_scripts/stylesheet.mplsty
 output_dir = BASE_DIR / "results"
 
 
-@hydra.main(config_path="../../configs/comparison_baseline_cifar10lt", config_name="compare_M", version_base=None)
+@hydra.main(config_path="../../results/configs/comparison_baseline_cifar10lt", config_name="compare_M", version_base=None)
 def main(args):
   plot_ensemble_size_vs_metric(args)
 

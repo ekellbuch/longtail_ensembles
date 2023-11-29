@@ -1,67 +1,23 @@
 """
-Given a config as compare_results_cifar100_trial1.yaml
+Given a yaml file with the locations of logits,
 calculate the metrics for different ensemble types
 
-python scripts/compare_results.py
-
-python scripts/compare_all_results_temperature.py --config-path="../configs/comparison_baseline_cifar10lt" --config-name="default"
-python scripts/compare_all_results_temperature.py --config-path="../configs/comparison_baseline_cifar100lt" --config-name="default"
+python scripts/compare_all_results_temperature.py --config-path="../results/configs/comparison_baseline_cifar10lt" --config-name="default"
+python scripts/compare_all_results_temperature.py --config-path="../results/configs/comparison_baseline_cifar100lt" --config-name="default"
 """
 import pandas as pd
 import hydra
 from omegaconf import OmegaConf
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__))))
-from compare_results import process_experiment_logits
+from longtail_ensembles.utils_print import process_experiment_logits
 import yaml
 import numpy as np
 
-# Custom function to format mean and std
 
-
-@hydra.main(config_path="../configs/comparison_baseline_cifar10lt", config_name="default", version_base=None)
+@hydra.main(config_path="../results/configs/comparison_baseline_cifar10lt", config_name="default", version_base=None)
 def main(args):
   compare_results_losses(args)
-
-def bold_max_min_value(val, col_name, col_max, col_min):
-  # Function to format the maximum or min depending on metric
-  if isinstance(val, (int, float)):
-    if col_name in ('acc', 'f1') and val == col_max[col_name]:
-      return '\\textbf{' + f'{val:.3f}' + '}'
-    elif col_name in ('brier', 'ece', 'nll') and val == col_min[col_name]:
-      return '\\textbf{' + f'{val:.3f}' + '}'
-    return f'{val:.3f}'
-  return str(val)
-
-
-def bold_max_min_value_str(val, col_name, col_max, col_min):
-  # Function to format the maximum or min depending on metric
-  if "± " in val: #isinstance(val, (int, float)):
-    if col_name in ('Acc.', 'F1', 'Cal-PR auc') and val == col_max[col_name]:
-      return '\\textbf{' + f'{val}' + '}'
-    elif col_name in ('Brier Score', 'ECE', 'NLL') and val == col_min[col_name]:
-      return '\\textbf{' + f'{val}' + '}'
-    return f'{val}'
-  return str(val)
-
-
-def bold_max_min_value_str_v1(val, col_name, col_max, col_min, group_max, group_min):
-  # Function to format the maximum or min depending on metric
-  if "± " in val: #isinstance(val, (int, float)):
-    if col_name in ('Acc.', 'F1', 'Cal-PR auc') and val in group_max[col_name].values:
-      if val == col_max[col_name]:
-        return '\\textbf{\\textcolor{red}{' + f'{val}' + '}}'
-      else:
-        return '\\textbf{' + f'{val}' + '}'
-    elif col_name in ('Brier Score', 'ECE', 'NLL') and val in group_min[col_name].values:
-      if val == val == col_min[col_name]:
-        return '\\textbf{\\textcolor{red}{' + f'{val}' + '}}'
-      else:
-        return '\\textbf{' + f'{val}' + '}'
-    return f'{val}'
-  return str(val)
-
 
 def combine_mean_std(group):
   result = {}
@@ -80,20 +36,6 @@ def combine_mean_std(group):
     combined = np.round(mean_val,3).astype(str) #+ ' (± ' + np.round(std_val,3).astype(str) + ')'
     result[metric] = combined
   return pd.DataFrame(result)
-
-
-def combine_rows(group):
-  results ={}
-  for metric in group.columns:
-    metric_val = group[metric]
-
-    # for long tail data acc can change
-    #if metric in ("Acc.", "F1"):
-    #  metric_val = metric_val.split("/")[0]
-    results[metric] = metric_val
-
-  return pd.DataFrame(results)
-
 
 
 def bold_max_min_value_str_dual(val, col_name, col_max, col_min):
@@ -119,7 +61,6 @@ def compare_results_losses(args):
 
     results = process_experiment_logits(loss_args)
     all_results.append(results)
-    #break
   all_results = pd.concat(all_results)
 
 
@@ -136,8 +77,7 @@ def compare_results_losses(args):
     df_new = df_new.groupby(level=0, axis=0).apply(combine_mean_std)
 
     # acc should not be recap?
-    #df_new2 = df_new.groupby(["Train Loss","Ensemble Type"]).agg(lambda x: '/'.join(x.astype(str))if not(x.name in ('Acc.', 'F1')) else x[0])#.reset_index()
-    df_new2 = df_new.groupby(["Train Loss","Ensemble Type"]).agg(lambda x: '/'.join(x.astype(str)))#.reset_index()
+    df_new2 = df_new.groupby(["Train Loss","Ensemble Type"]).agg(lambda x: '/'.join(x.astype(str)))
     # calculate col max and min
     col_max = df_new.max()
     col_min = df_new.min()
@@ -201,7 +141,7 @@ def compare_results_losses(args):
     'brier': 'Brier Score',
     'ece': 'ECE',
     'nll': 'NLL',
-    'CalPRauc' :'Cal-PR auc',
+    'CalPRauc':'Cal-PR auc',
   }
   all_results = all_results.rename(columns=index_mapping)
 
@@ -220,12 +160,9 @@ def compare_results_losses(args):
      }
   )
 
-  #import pdb; pdb.set_trace()
   all_results.set_index(['data_type','Train Loss',"sdata_type", 'Ensemble Type','architecture'], inplace=True)
 
   # check each ensemble before and after temperature scaling should have the same performance:
-  #import pdb; pdb.set_trace()
-  all_results
   # Plot
   cols_to_group_ = ["data_type", "architecture"]
   new_results = all_results.groupby(cols_to_group_)

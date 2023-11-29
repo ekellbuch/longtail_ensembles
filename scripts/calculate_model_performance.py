@@ -1,10 +1,11 @@
 """
-Calculate the model performance for a variety of models.
+Given a yaml file with locations of logits,
+Calculate the model performance for a variety of models and store outputs in csv file.
 
-python scripts/calculate_model_performance.py --config-path="../configs/datasets/cifar10" --config-name="cifar10"
-python scripts/calculate_model_performance.py --config-path="../configs/datasets/cifar10" --config-name="cinic10"
-python scripts/calculate_model_performance.py --config-path="../configs/datasets/cifar10" --config-name="cifar10_1"
-python scripts/calculate_model_performance.py --config-path="../configs/datasets/imagenet" --config-name="imagenet_c_gaussian_noise_1"
+python scripts/calculate_model_performance.py --config-path="../results/configs/datasets/cifar10" --config-name="cifar10"
+python scripts/calculate_model_performance.py --config-path="../results/configs/datasets/cifar10" --config-name="cinic10"
+python scripts/calculate_model_performance.py --config-path="../results/configs/datasets/cifar10" --config-name="cifar10_1"
+python scripts/calculate_model_performance.py --config-path="../results/configs/datasets/imagenet" --config-name="imagenet_c_gaussian_noise_1"
 """
 import hydra
 from ensemble_testbed.predictions import Model
@@ -55,7 +56,7 @@ def get_arrays_toplot(models):
     return df
 
 
-@hydra.main(config_path="../configs/datasets/cifar10", config_name="cifar10")
+@hydra.main(config_path="../results/configs/datasets/cifar10", config_name="cifar10")
 def main(args):
     results_dir = Path(here) / "results/model_performance/{}.csv".format(
         args.test_set)
