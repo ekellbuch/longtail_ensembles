@@ -41,8 +41,6 @@ trainer_cfg:
 # training flags
 eval_cfg:
   test_phase: 0
-  softmax: 0
-  store_split: 0
   random_eval: 0  # random eval do not store logits.
   store_train: 0
   return_model: 0
@@ -56,10 +54,7 @@ module_cfg:
   pretrained-path: null
   learning_rate: 1e-2
   weight_decay: 1e-2
-  lamb: 0.5
   scheduler: cosine
-  nb_models: 4
-  gamma: 1
   temperature_scaling: 0
   checkpoint: null
   samples_per_class: null

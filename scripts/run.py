@@ -169,8 +169,6 @@ def train(args):
     if args.seed is not None:
         seed_everything(args.seed)
 
-    # if torch.cuda.is_available():
-    #   os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu_id
     try:
         hydra_cfg = hydra.core.hydra_config.HydraConfig.get()
         output_dir = hydra_cfg['runtime']['output_dir']
@@ -219,7 +217,7 @@ def train(args):
 
     # Configure checkpoint and trainer:
     checkpoint = ModelCheckpoint(
-        monitor="acc/val",
+        monitor="accuracy/val",
         mode="max",
         save_last=False,
         dirpath=checkpoint_dir,
@@ -333,19 +331,12 @@ def train(args):
         trainer.fit(model, ind_data, **args.fit_cfg)
 
     # ------------------------------------------------
-    # Let's add some metrics
-    ind_performance = trainer.test(model, ind_data.test_dataloader())[0]
-    print('Finished test ind ', flush=True)
-    if args.trainer_cfg.logger == "wandb" and (trainer.global_rank == 0)\
-      and len(trainer.device_ids) == 1:
-        try:
-            for k, v in ind_performance.items():
-                logger.experiment.summary['{}_ind'.format(k)] = v
-            ood_performance = trainer.test(model, ood_data.test_dataloader())[0]
-            for k, v in ood_performance.items():
-                logger.experiment.summary['{}_ood'.format(k)] = v
-        except:
-            pass
+    # Evaluate model on datasets
+    trainer.test(model, ind_data.test_dataloader())
+
+    # Log OOD metrics
+    model.logging_stage_name = 'ood/'
+    trainer.test(model, ood_data.test_dataloader())
 
     print('Finished logging ind/ood performance', flush=True)
     # make sure we log the right things:
@@ -387,18 +378,12 @@ def train(args):
         # if ensemble
         # model.models = ModuleWithTemperature(model.models, ts_model.temperature)
 
-        if args.trainer_cfg.logger == "wandb" and (trainer.global_rank == 0)\
-          and  len(trainer.device_ids) == 1:
-            try:
-                tmp_performance = trainer.test(model, ind_data.test_dataloader())[0]
-                for k, v in tmp_performance.items():
-                    logger.experiment.summary['{}_ind_temperature'.format(k)] = v
-                tmp_performance = trainer.test(model, ood_data.test_dataloader())[0]
-                for k, v in tmp_performance.items():
-                    logger.experiment.summary['{}_ood_temperature'.format(k)] = v
-                logger.experiment.summary['out/temperature'] = ts_model.temperature.numpy()
-            except:
-                pass
+        # Log metrics before/after temperature scaling:
+        model.logging_stage_name = 'ind_temperature/'
+        trainer.test(model, ind_data.test_dataloader())
+
+        model.logging_stage_name = 'ood_temperature/'
+        trainer.test(model, ood_data.test_dataloader())
 
         # store logits
         if not bool(args.eval_cfg.random_eval):

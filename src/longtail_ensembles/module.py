@@ -4,6 +4,7 @@ import pytorch_lightning as pl
 import torch
 from torchmetrics import Accuracy
 from torchmetrics import F1Score as F1
+from torchmetrics import CalibrationError
 from .schduler import WarmupCosineLR, CosineAnnealingLRWarmup
 from .loss.BalancedSoftmaxLoss import BalancedSoftmax
 from .loss.WeightedSoftmaxLoss import WeightedSoftmax
@@ -37,19 +38,16 @@ class CIFAR10_Models(pl.LightningModule):
 
     def validation_step(self, batch, batch_nb):
         outputs = self.forward(batch)
-        self.log("loss/val", outputs['loss'])
-        self.log("acc/val", outputs['accuracy'])
+
+        for key in outputs.keys():
+            self.log(f"{key}/val", outputs[key])
 
     def test_step(self, batch, batch_nb):
         outputs = self.forward(batch)
-        self.log("acc/test", outputs['accuracy'])
 
-        if 'ece' in outputs.keys():
-            self.log("ece/test", outputs['ece'])
+        for key in outputs.keys():
+            self.log(f"{key}/test", outputs[key])
 
-        if 'accuracy/per_model/model_0' in outputs.keys():
-            for i in range(self.nb_models):
-                self.log(f"acc/per_model/model_{i}", outputs[f'accuracy/per_model/model_{i}'])
 
     def setup_scheduler(self, optimizer, total_steps, warm_steps=None):
         """Chooses between the cosine learning rate scheduler that came with the repo, or step scheduler based on wideresnet training.
@@ -206,8 +204,7 @@ class CIFAR10Module(CIFAR10_Models):
             label_smoothing=self.label_smoothing)
         self.num_classes = hparams.get('num_classes', 10)
         self.accuracy = Accuracy(task="multiclass", num_classes=self.num_classes)
-        self.ece = _ECELoss()
-
+        self.ece = CalibrationError(task="multiclass", num_classes=self.num_classes)
         self.model = all_classifiers[self.hparams.classifier](
             num_classes=self.num_classes)
 
@@ -215,6 +212,8 @@ class CIFAR10Module(CIFAR10_Models):
 
         # additional metrics
         self.f1 = F1(num_classes=self.num_classes, average=None, task="multiclass")
+        self.logging_stage_name = ""
+
 
     def predict_step(self, batch,batch_idx, dataloader_idx=0):
         images, labels = batch
@@ -230,12 +229,13 @@ class CIFAR10Module(CIFAR10_Models):
         outputs = {'loss': loss, 'accuracy': accuracy, 'ece': ece}
 
         # additional metrics
-        f1 = self.f1(predictions, labels)
-
-        outputs['f1'] = f1
+        if self.track_score_pclass:
+            f1 = self.f1(predictions, labels)
+            for i in range(self.num_classes):
+                outputs[f"f1/per_class/class_{i}"] = f1[i]
         return outputs
 
-    def forward_outs(self, batch, use_softmax=True, store_split=False):
+    def forward_outs(self, batch, use_softmax=False, store_split=False):
         """Like forward, but just exit with the softmax predictions and labels. .
     """
         del store_split
@@ -255,25 +255,22 @@ class CIFAR10Module(CIFAR10_Models):
         if torch.isnan(loss):
             raise ValueError("Loss is NaN")
 
-        self.log("loss/train", loss)
-        self.log("acc/train", outputs['accuracy'])
-
-        # add f1 metrics per class
-        if self.track_score_pclass:
-            for i in range(self.num_classes):
-                self.log(f"f1/per_class/class_{i}", outputs['f1'][i])
+        for key in outputs.keys():
+            self.log(f"{self.logging_stage_name}{key}/train", outputs[key])
 
         return loss
 
     def validation_step(self, batch, batch_nb):
         outputs = self.forward(batch)
-        self.log("loss/val", outputs['loss'])
-        self.log("acc/val", outputs['accuracy'])
 
-        # add f1 metrics per class
-        if self.track_score_pclass:
-            for i in range(self.num_classes):
-                self.log(f"f1/per_class/class_{i}", outputs['f1'][i])
+        for key in outputs.keys():
+            self.log(f"{self.logging_stage_name}{key}/val", outputs[key])
+
+    def test_step(self, batch, batch_nb):
+        outputs = self.forward(batch)
+
+        for key in outputs.keys():
+            self.log(f"{self.logging_stage_name}{key}/test", outputs[key])
 
     def configure_optimizers(self):
         optimizer = torch.optim.SGD(
@@ -299,6 +296,33 @@ class CIFAR10Module(CIFAR10_Models):
         scheduler = self.setup_scheduler(optimizer, total_steps, warm_steps)
         return [optimizer], [scheduler]
 
+    def _reset_agg_metrics(self):
+        self.accuracy.reset()
+        self.ece.reset()
+        self.f1.reset()
+
+    def _calc_agg_metrics(self, stage):
+        self.log(f"{self.logging_stage_name}{stage}accuracy", self.accuracy.compute())
+        self.log(f"{self.logging_stage_name}{stage}ece", self.ece.compute())
+
+        if self.track_score_pclass:
+            aps_ = self.f1.compute()
+            for i in range(self.num_classes):
+                self.log(f"{self.logging_stage_name}{stage}f1/per_class/class_{i}", aps_[i])
+
+        self._reset_agg_metrics()
+
+    def on_test_epoch_start(self):
+        self._reset_agg_metrics()
+
+    def on_test_epoch_end(self):
+        self._calc_agg_metrics(stage='epoch/test_')
+
+    def on_val_epoch_start(self):
+        self._reset_agg_metrics()
+
+    def on_val_epoch_end(self):
+        self._calc_agg_metrics(stage='epoch/val_')
 
 class CIFAR10EnsembleModule(CIFAR10_Models):
     """Customized module to train an ensemble of models independently
@@ -318,6 +342,7 @@ class CIFAR10EnsembleModule(CIFAR10_Models):
         ])  # now we add several different instances of the model.
         self.track_score_pmodel = hparams.get('track_score_pmodel', True)
         self.track_score_pclass = hparams.get('track_score_pclass', False)
+        self.logging_stage_name = ""
 
         # additional metrics
         #self.f1 = F1(num_classes=self.num_classes, average=None, task="multiclass")
@@ -401,12 +426,9 @@ class CIFAR10EnsembleModule(CIFAR10_Models):
         if torch.isnan(loss):
             raise ValueError("Loss is NaN")
 
-        self.log("loss/train", loss)
-        self.log("acc/train", outputs['accuracy'])
+        for key in outputs.keys():
+            self.log(f"{key}/train", outputs[key])
 
-        if self.track_score_pmodel:
-            for i in range(self.nb_models):
-                self.log(f"acc/per_model/model_{i}", outputs[f'accuracy/per_model/model_{i}'])
         return loss
 
     def configure_optimizers(self):
@@ -474,12 +496,8 @@ class CIFAR10EnsembleJGAPModule(CIFAR10EnsembleModule):
         if torch.isnan(loss):
             raise ValueError("Loss is NaN")
 
-        self.log("loss/train", loss)
-        self.log("acc/train", outputs['accuracy'])
-
-        if self.track_score_pmodel:
-            for i in range(self.nb_models):
-                self.log(f"acc/per_model/model_{i}", outputs[f'accuracy/per_model/model_{i}'])
+        for key in outputs.keys():
+            self.log(f"{key}/train", outputs[key])
 
         return loss
 

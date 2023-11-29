@@ -1,106 +1,66 @@
 Comment: >
-  Note config in 
-  https://github.com/jiawei-ren/BalancedMetaSoftmax-Classification/blob/main/config/CIFAR10_LT/balanced_softmax_imba200.yaml
-  and code in:
-  https://github.com/facebookresearch/classifier-balancing/blob/main/run_networks.py
-
-  Run:
-  python scripts/run.py --config-name="run_gpu_cifar10lt" eval_cfg.random_eval=1
   
-  Debug:
-  # single cpu check
-  python scripts/run.py --config-name="run_gpu_cifar10lt" trainer_cfg.fast_dev_run=1 eval_cfg.random_eval=1 trainer_cfg.logger="tensorboard" trainer_cfg.gpus=null data_cfg.num_workers=8
+  # debug
+  python scripts/run.py --config-name="run_gpu_cifar10lt" trainer_cfg.fast_dev_run=1 eval_cfg.random_eval=1 data_cfg.seed=0
 
-  # single gpu check
-  python scripts/run.py --config-name="run_gpu_cifar10lt" trainer_cfg.fast_dev_run=1 eval_cfg.random_eval=1 trainer_cfg.logger="tensorboard"
+project_name: longtail_gpu_cifar10lt
 
-  # multi gpu check
-  python scripts/run.py --config-name="run_gpu_cifar10lt" trainer_cfg.gpus=4 trainer_cfg.accelerator="ddp" trainer_cfg.fast_dev_run=1 eval_cfg.random_eval=1 trainer_cfg.logger="tensorboard"
+# Data config:
 
-  # --------- Runs -------------------------
-
-  - interval epoch: 35% instead of 71%???
-  https://wandb.ai/ekellbuch/longtail_gpu_cifar10lt/runs/1sqa6ifn
-  
-  - interval step: 54%
-  https://wandb.ai/ekellbuch/longtail_gpu_cifar10lt/runs/2lqb87d6
-
-  - batch_size = 512: 52%
-  https://wandb.ai/ekellbuch/longtail_gpu_cifar10lt/runs/39blhpmu
-
-  - same params as cifar100: 55%
-  python scripts/run.py --config-name="run_gpu_cifar10lt" eval_cfg.random_eval=1 trainer_cfg.max_epochs=160 module_cfg.learning_rate=0.1 module_cfg.weight_decay=0.0005 module_cfg.scheduler=step
-  https://wandb.ai/ekellbuch/longtail_gpu_cifar10lt/runs/hvdi3dtn
-
-  - using data same augmentation as balms
-  todo
-  
-  - train model with cosine_fwarmup 
-  python scripts/run.py --config-name="run_gpu_cifar10lt" eval_cfg.random_eval=1 trainer_cfg.max_epochs=150 module_cfg.learning_rate=0.01 module_cfg.weight_decay=0.01 module_cfg.scheduler=cosine_fwarmup module_cfg.warmup_epochs=50
-
-  python scripts/run.py --config-name="run_gpu_cifar10lt" eval_cfg.random_eval=1 trainer_cfg.max_epochs=160 module_cfg.learning_rate=1e-2 module_cfg.weight_decay=1e-2 module_cfg.scheduler=cosine_warm --module_cfg.
-
-project_name: longtail_gpu_cifar10ltaug
-
-# Program arguments:
 data_cfg:
-  test_set: "IMBALANCECIFAR10"
-  data_dir: ${oc.env:HOME}/pytorch_datasets
-  ood_dataset: cifar10_1
-  corruption: null  # -c corruption_type
-  level: null  # -c corruption_level
+  test_set: "IMBALANCECIFAR10Aug_v2"    # pytorch lightning datamodule
+  data_dir: ${oc.env:HOME}/pytorch_datasets # location of test set
+  ood_dataset: cifar10_1  # ood dataset
+  corruption: null  # -c corruption_type in ood_dataset
+  level: null  # -c corruption_level in ood_dataset
   version: v4  # cifar10_1 version v4 or v6
-  num_classes: 10
-  samples_per_class: null
-  batch_size: 512
-  num_workers: 32
-  seed: 0
-  valid_size: 0  # assign val_set 0.1*train_set size
+  num_classes: 10   # number of classes in dataset
+  samples_per_class: null   # number of samples per class
+  batch_size: 256
+  num_workers: 32  # dataloader number of workers to use
+  seed: null      # dataloader seed
+  valid_size: 0.1  # assign val_set 0.1*train_set size
   imb_type: exp   # params for imbalanced cifar10/0
-  imb_factor: 0.005  # params for imbalanced cifar10/0
+  imb_factor: 0.01  # params for imbalanced cifar10/0
 
+
+fit_cfg:
+  ckpt_path: null
 
 trainer_cfg:
   fast_dev_run: 0
   logger: "wandb"
   deterministic: false
   log_every_n_steps: 50
-  max_epochs: 260
+  max_epochs: 200
   precision: 32
   devices: auto
   accelerator: auto
-  val_check_interval: 1.0
+  val_check_interval: 1.0  # set to 1 for early stopping
   plugins: null
-
-fit_cfg:
-  ckpt_path: null
 
 # training flags
 eval_cfg:
-  test_phase: 0
-  softmax: 0
-  store_split: 0
+  test_phase: 0   # bool if we are on test phase, do not train
   random_eval: 0  # random eval do not store logits.
-  store_train: 0
-  return_model: 0
+  store_train: 0  # store logits on train set
+  return_model: 0  # return model trainer for debugging
 
 seed: null
 
 module_cfg:
-  module: base
-  classifier: resnet32_cfa
+  module: base  # pytorch lightning model module
+  classifier: resnet32_cfa   # name of network
   pretrained: 0
   pretrained-path: null
-  learning_rate: 0.1
+  learning_rate: 0.05
   weight_decay: 0.0005
   lamb: 0.5
-  scheduler: cosine_anneal
-  warmup_epochs: 20  # warmup iters not epochs
-  nb_models: 4
-  gamma: 1
+  scheduler: step_ldam
   temperature_scaling: 0
   checkpoint: null
   samples_per_class: null
+
 
 callbacks:
   gradnorm: 0
@@ -111,8 +71,9 @@ callbacks:
 early_stop_cfg:
   monitor: loss/val
   mode: min
-  patience: 10  # related to val_check_interval
+  verbose: true
   min_delta: 0.0001
+  patience: 10  # related to val_check_interval
 
 
 # Temperature scaling parameters
@@ -121,6 +82,14 @@ ts_cfg:
   max_epochs: 1
   init_temp: 1.5  # init temperature
   ts_module: "ts_base" # ts and ts_vector
+  opt_params:
+    lr: 0.01
+    max_iter: 50
+    line_search_fn: "strong_wolfe"
+  trainer_args:
+    gradient_clip_val: 0.5
+    gradient_clip_algorithm: "value"
+
 
 hydra:
   run:
