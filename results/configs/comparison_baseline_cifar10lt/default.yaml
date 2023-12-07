@@ -5,7 +5,7 @@ title: "CIFAR10lt_baseline"
 ind_dataset: "IMBALANCECIFAR10"
 ood_dataset: "cifar10_1"
 
-config_path: "/data/Projects/linear_ensembles/longtail_ensembles/configs/comparison_baseline_cifar10lt"
+config_path: "/data/Projects/linear_ensembles/longtail_ensembles/results/configs/comparison_baseline_cifar10lt"
 
 train_loss:
  - "base"
