@@ -238,7 +238,6 @@ class CIFAR10Module(CIFAR10_Models):
     def forward_outs(self, batch, use_softmax=False, store_split=False):
         """Like forward, but just exit with the softmax predictions and labels. .
     """
-        del store_split
         softmax = torch.nn.Softmax(dim=1)
         images, labels = batch
         predictions = self.model(images)
@@ -427,9 +426,21 @@ class CIFAR10EnsembleModule(CIFAR10_Models):
             raise ValueError("Loss is NaN")
 
         for key in outputs.keys():
-            self.log(f"{key}/train", outputs[key])
+            self.log(f"{self.logging_stage_name}{key}/train", outputs[key])
 
         return loss
+
+    def validation_step(self, batch, batch_nb):
+        outputs = self.forward(batch)
+
+        for key in outputs.keys():
+            self.log(f"{self.logging_stage_name}{key}/val", outputs[key])
+
+    def test_step(self, batch, batch_nb):
+        outputs = self.forward(batch)
+
+        for key in outputs.keys():
+            self.log(f"{self.logging_stage_name}{key}/test", outputs[key])
 
     def configure_optimizers(self):
         optimizer = torch.optim.SGD(
@@ -444,6 +455,23 @@ class CIFAR10EnsembleModule(CIFAR10_Models):
         scheduler = self.setup_scheduler(optimizer, total_steps)
         return [optimizer], [scheduler]
 
+    def _reset_agg_metrics(self):
+        self.accuracy.reset()
+
+    def on_test_epoch_start(self):
+        self._reset_agg_metrics()
+
+    def on_test_epoch_end(self):
+        self._calc_agg_metrics(stage='epoch/test_')
+
+    def _calc_agg_metrics(self, stage):
+        self.log(f"{self.logging_stage_name}{stage}accuracy", self.accuracy.compute())
+
+    def on_validation_epoch_start(self):
+        self._reset_agg_metrics()
+
+    def on_validation_epoch_end(self):
+        self._calc_agg_metrics(stage='epoch/val_')
 
 class CIFAR10EnsembleJGAPModule(CIFAR10EnsembleModule):
     """
@@ -497,7 +525,7 @@ class CIFAR10EnsembleJGAPModule(CIFAR10EnsembleModule):
             raise ValueError("Loss is NaN")
 
         for key in outputs.keys():
-            self.log(f"{key}/train", outputs[key])
+            self.log(f"{self.logging_stage_name}{key}/train", outputs[key])
 
         return loss
 
