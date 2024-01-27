@@ -324,12 +324,16 @@ def train(args):
 
     # do we train the model or not?
     if bool(args.eval_cfg.test_phase):
-        # Let's add some metrics for the train set
-        # trainer.test(model, ind_data.train_dataloader())[0]
         pass
     else:
         trainer.fit(model, ind_data, **args.fit_cfg)
-
+        # ------------------------------------------------
+        # Load best model at end of training
+        best_ckpt = os.path.abspath(trainer.checkpoint_callback.best_model_path)
+        if os.path.isfile(best_ckpt):
+            # Load best for testing (using ckpt_path='best' not compatible with TS)
+            model.load_state_dict(torch.load(best_ckpt)['state_dict'])
+            # TODO: fix any issues with trainer compatibility issues
     # ------------------------------------------------
     # Evaluate model on datasets
     trainer.test(model, ind_data.test_dataloader())
