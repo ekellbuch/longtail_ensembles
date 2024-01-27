@@ -1,8 +1,8 @@
 """
 calculate the metrics for different ensemble types
 
-python scripts/compare_all_results.py --config-path="../configs/results/comparison_baseline_cifar10lt" --config-name="default"
-python scripts/compare_all_results.py --config-path="../configs/results/comparison_baseline_cifar100lt" --config-name="default"
+python scripts/compare_all_results.py --config-path="../results/configs/comparison_baseline_cifar10lt_v3" --config-name="default"
+python scripts/compare_all_results.py --config-path="../results/configs/comparison_baseline_cifar100lt" --config-name="default"
 """
 import pandas as pd
 import hydra
@@ -16,13 +16,28 @@ def main(args):
   compare_results_losses(args)
 
 
-def bold_max_min_value_str(val, col_name, col_max, col_min):
+def bold_max_min_value_str(val, col_name, col_max, col_min, group_max=None, group_min=None):
   # Function to format the maximum or min depending on metric:
   if "± " in val:
-    if col_name in ('Acc.', 'F1', 'Cal-PR auc') and val == col_max[col_name]:
-      return '\\textbf{' + f'{val}' + '}'
-    elif col_name in ('Brier Score', 'ECE', 'NLL') and val == col_min[col_name]:
-      return '\\textbf{' + f'{val}' + '}'
+    if col_name in ('Acc.', 'F1', 'Cal-PR auc'):
+      if group_max is not None:
+        # group max in blue and best is bold blue:
+        if val == col_max[col_name]:
+          return '\\textbf{\\textcolor{blue}{'+ f'{val}' + '}}'
+        if np.any(val == group_max[col_name]):
+          return '\\textcolor{blue}{' + f'{val}' + '}'
+      else:
+        if val == col_max[col_name]:
+          return '\\textbf{' + f'{val}' + '}'
+    elif col_name in ('Brier Score', 'ECE', 'NLL'):
+      if group_min is not None:
+        if val == col_min[col_name]:
+          return '\\textbf{\\textcolor{blue}{' + f'{val}' + '}}'
+        if np.any(val == group_min[col_name]):
+          return '\\textcolor{blue}{' + f'{val}' + '}'
+      else:
+        if val == col_min[col_name]:
+          return '\\textbf{' + f'{val}' + '}'
     return f'{val}'
   return str(val)
 
@@ -65,7 +80,6 @@ def compare_results_losses(args):
     # calculate mean and std, then format it
     df.index = df.index.droplevel(cols_to_group)
     # groupby mean and std
-
     df_new = df.groupby(df.index.names).agg([('mean', 'mean'), ('std', 'std')])
     df_new = df_new.groupby(level=0, axis=0).apply(combine_mean_std)
 
@@ -73,8 +87,11 @@ def compare_results_losses(args):
     col_max = df_new.max()
     col_min = df_new.min()
 
+    group_max = df_new.groupby(['Train Loss']).max()
+    group_min= df_new.groupby(['Train Loss']).min()
+
     columns = ['Acc.', 'F1', 'Brier Score', 'NLL', 'Cal-PR auc']
-    formatters = {col: (lambda val, col_name=col: bold_max_min_value_str(val, col_name, col_max, col_min)) for col in df_new.columns}
+    formatters = {col: (lambda val, col_name=col: bold_max_min_value_str(val, col_name, col_max, col_min, group_max, group_min)) for col in df_new.columns}
 
     custom_order_train= {'Softmax (ERM)': 1,
      'Balanced Softmax CE': 2,
@@ -146,14 +163,16 @@ def compare_results_losses(args):
     print(all_results.groupby(['data_type', 'Train Loss', 'Ensemble Type', 'architecture','seed'])['Acc.'].unique(), flush=True)
     exit()
   # make sure the ensemble nll is the lower before/ after temperature scaling
-  for metric_ in ['NLL', 'ECE']:
-    nll_ = all_results.groupby(['data_type', 'Train Loss', 'Ensemble Type', 'architecture', 'seed']).apply(lambda x: x.groupby(['sdata_type'])[metric_].mean())
-    try:
-      assert (nll_['temperature'] < nll_['base']).loc[pd.IndexSlice[:,:,"single model"]].all()
-    except:
-      pd.set_option('display.max_rows', 500)
-      print(nll_, flush=True)
-      exit()
+  if 'temperature' in all_results.columns:
+    for metric_ in ['NLL', 'ECE']:
+      nll_ = all_results.groupby(['data_type', 'Train Loss', 'Ensemble Type', 'architecture', 'seed']).apply(lambda x: x.groupby(['sdata_type'])[metric_].mean())
+
+      try:
+        assert (nll_['temperature'] < nll_['base']).loc[pd.IndexSlice[:,:,"single model"]].all()
+      except:
+        pd.set_option('display.max_rows', 500)
+        print(nll_, flush=True)
+        exit()
 
   new_results = all_results.groupby(cols_to_group)
   for group_name, group_data in new_results:
