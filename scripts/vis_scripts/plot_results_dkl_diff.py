@@ -1,4 +1,7 @@
 """
+
+python scripts/vis_scripts/plot_results_dkl_diff.py --config-path="../../results/configs/comparison_baseline_cifar10lt" --config-name="default"
+
 """
 import hydra
 import os

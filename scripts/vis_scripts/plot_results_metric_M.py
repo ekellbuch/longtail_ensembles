@@ -160,7 +160,7 @@ def plot_ensemble_size_vs_metric(args):
       'borderaxespad': 0,
       'handletextpad': 0,
       'loc': 'center left',
-      'bbox_to_anchor': (1.0, 0.5),
+      'bbox_to_anchor': (1.5, 1.5),
       'markerscale': 0.5,  # relative size of legend marker compared to originally drawn ones.
       'frameon': True,
     }

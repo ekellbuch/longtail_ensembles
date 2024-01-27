@@ -30,6 +30,7 @@ def plot_p_class_box(args):
   for loss_type in args.train_loss:
     print(f"Loss type: {loss_type}", flush=True)
     config_file = args.config_path + "/" + loss_type + ".yaml"
+    print('Loading {}'.format(config_file))
     loss_args = yaml.load(open(str(config_file)), Loader=yaml.FullLoader)
     loss_args = OmegaConf.create(loss_args)
     results = process_experiment_logits_pclass(loss_args)
