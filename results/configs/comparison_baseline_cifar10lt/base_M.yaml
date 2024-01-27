@@ -5,7 +5,7 @@ Comment: >
   
   additional seeds 
   https://wandb.ai/ekellbuch/uncategorized/sweeps/0itowy8a
-  
+  https://wandb.ai/ekellbuch/uncategorized/sweeps/d4s9wp4v
 
 title: "CIFAR10lt_base"
 ind_dataset: "IMBALANCECIFAR10"
