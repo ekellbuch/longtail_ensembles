@@ -3,8 +3,14 @@ Comment: >
   wandb sweep experiments/compare_loss/train_gpu_loss_cifar10_largeM.yaml
 
   Experiments:
-  # set data_cfg.seed = 0 so batch loader is seeded
+  # set data_cfg.seed = 0 so batch loader is seeded, IMBALANCECIFAR10, 150 epochs 
   https://wandb.ai/ekellbuch/uncategorized/sweeps/0itowy8a
+
+  # run for IMBALANCECIFAR10_v2, data_cfg.seed = null and 200 epochs.
+  - https://wandb.ai/ekellbuch/uncategorized/sweeps/ag64tvmz  
+    run with seeds 6-19
+  - https://wandb.ai/ekellbuch/uncategorized/sweeps/ngh67x5y
+    run with seeds 20-25
 
 name: train_gpu_loss_M
 program: scripts/run.py
@@ -17,21 +23,13 @@ parameters:
   project_name:
     value: longtail_gpu_cifar10lt
   seed:
-    values: [10, 11, 12, 13, 14]
+    values: [20, 21, 22, 23, 24, 25]
   module_cfg.temperature_scaling:
-    value: 0
+    value: 1
   module_cfg.module:
     values: [base, base_bloss]
-  data_cfg.test_set:
-    value: "IMBALANCECIFAR10"
   module_cfg.classifier:
     values: ["resnet32_cfa"]
-  trainer_cfg.max_epochs:
-    value: 150
-  trainer_cfg.logger:
-    value: "wandb"
-  data_cfg.num_workers:
-    value: 32
 
 
 command:
@@ -39,5 +37,5 @@ command:
   - python
   - ${program}
   - "--config-name"
-  - "run_gpu_cifar10"
+  - "run_gpu_cifar10lt"
   - ${args_no_hyphens}

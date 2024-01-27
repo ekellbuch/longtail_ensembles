@@ -3,7 +3,10 @@ Comment: >
   wandb sweep experiments/compare_loss/train_gpu_loss_cifar10.yaml
 
   Experiments:
-  - https://wandb.ai/ekellbuch/uncategorized/sweeps/nggmmw4m
+  - using run_gpu_cifar10
+    https://wandb.ai/ekellbuch/uncategorized/sweeps/nggmmw4m
+  - using run_gpu_cifar10lt
+  - https://wandb.ai/ekellbuch/uncategorized/sweeps/24puese5
 
 name: train_gpu_bloss_debug
 program: scripts/run.py
@@ -21,12 +24,8 @@ parameters:
     value: 1
   module_cfg.module:
     values: [base, base_bloss, weighted_softmax, weighted_ce]
-  data_cfg.test_set:
-    value: "IMBALANCECIFAR10"
   module_cfg.classifier:
     values: ["resnet_orig_110", "resnet32_cfa"]
-  trainer_cfg.max_epochs:
-    value: 150
 
 
 command:
@@ -34,5 +33,5 @@ command:
   - python
   - ${program}
   - "--config-name"
-  - "run_gpu_cifar10"
+  - "run_gpu_cifar10lt"
   - ${args_no_hyphens}
